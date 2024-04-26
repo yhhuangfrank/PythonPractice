@@ -97,7 +97,7 @@ solution = Solution()
 s1 = "ab"
 s2 = "eidbaooo"
 s3 = "eidboaoo"
-# print(solution.checkInclusion(s1, s2))
-# print(solution.checkInclusion(s1, s3))
+print(solution.checkInclusion(s1, s2))
+print(solution.checkInclusion(s1, s3))
 print(solution.checkInclusionV2(s1, s2))
 print(solution.checkInclusionV2(s1, s3))

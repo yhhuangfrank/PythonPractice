@@ -51,6 +51,5 @@ class Solution:
 
 
 sol = Solution()
-# print(sol.permute([1, 2, 3]))
-print(sol.permuteV2([1, 2, 3]))
-# print(sol.permuteItertatively([1, 2, 3]))
+print(sol.permute([1, 2, 3]))
+print(sol.permuteItertatively([1, 2, 3]))

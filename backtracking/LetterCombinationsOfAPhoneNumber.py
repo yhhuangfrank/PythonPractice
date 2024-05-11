@@ -20,6 +20,7 @@ from typing import List
 
 
 class Solution:
+    # O(4^n) time
     def letterCombinations(self, digits: str) -> List[str]:
         res = []
         table = {

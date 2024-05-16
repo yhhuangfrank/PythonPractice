@@ -80,6 +80,7 @@ class Solution:
         # 節點數要相同，0 號節點的 prev 用 -1 (節點從 0 開始編號)
         return dfs(0, -1) and len(visited) == n
 
+
 sol = Solution()
 arr = [[0, 1], [0, 2], [0, 3], [1, 4]]
 arr1 = [[0, 1], [1, 2], [2, 3], [1, 3], [1, 4]]

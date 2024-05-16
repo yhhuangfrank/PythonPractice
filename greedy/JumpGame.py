@@ -38,7 +38,6 @@ class Solution:
             if i == len(nums) - 1:
                 return True
             if nums[i] == 0:
-                cache.add(i)  # 代表此 index 已經判斷過
                 return False
             for j in range(1, nums[i] + 1):
                 next_position = i + j
@@ -46,7 +45,7 @@ class Solution:
                     continue
                 if dfs(next_position):
                     return True
-            cache.add(i)
+            cache.add(i)  # 代表此 index 已經判斷過
             return False
 
         return dfs(0)

@@ -38,6 +38,7 @@ class Solution:
             if i == len(nums) - 1:
                 return True
             if nums[i] == 0:
+                cache.add(i)
                 return False
             for j in range(1, nums[i] + 1):
                 next_position = i + j

@@ -106,8 +106,3 @@ print(sol.checkValidStringV2("(*)"))
 print(sol.checkValidStringV2("(*))"))
 print(sol.checkValidStringV2("(*)("))
 
-
-
-
-
-

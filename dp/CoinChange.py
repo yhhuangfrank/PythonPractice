@@ -59,14 +59,24 @@ class Solution:
                 return 0
             ans = INF
             for num in coins:
-                t = dfs(remain - num)
+                t = 1 + dfs(remain - num)
                 if t != INF:
-                    ans = min(ans, 1 + t)
+                    ans = min(ans, t)
             cache[remain] = ans
             return cache[remain]
 
         res = dfs(amount)
         return res if res != INF else -1
+
+    # DP - bottom up
+    def coinChangeV3(self, coins: List[int], amount: int) -> int:
+        dp = [amount + 1] * (amount + 1)  # 每個剩餘的錢最小搭配的硬幣數
+        dp[0] = 0
+        for i in range(1, amount + 1):
+            for val in coins:
+                if i - val >= 0:
+                    dp[i] = min(dp[i], 1 + dp[i - val])
+        return dp[amount] if dp[amount] != amount + 1 else -1
 
 
 sol = Solution()
@@ -81,8 +91,14 @@ arr5 = [2]
 # print(sol.coinChange(arr4, 6249))
 # print(sol.coinChange(arr5, 4))
 print("==============================")
-print(sol.coinChangeV2(arr1, 11))
-print(sol.coinChangeV2(arr2, 3))
+# print(sol.coinChangeV2(arr1, 11))
+# print(sol.coinChangeV2(arr2, 3))
+# print(sol.coinChangeV2(arr3, 0))
+# print(sol.coinChangeV2(arr4, 6249))
+# print(sol.coinChangeV2(arr5, 4))
+print("==============================")
+print(sol.coinChangeV3(arr1, 11))
+print(sol.coinChangeV3(arr2, 3))
 print(sol.coinChangeV2(arr3, 0))
 print(sol.coinChangeV2(arr4, 6249))
 print(sol.coinChangeV2(arr5, 4))

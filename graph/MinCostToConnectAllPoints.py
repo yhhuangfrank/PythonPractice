@@ -6,6 +6,8 @@
 # Output: 18
 import heapq
 from typing import List
+
+
 class UnionFind:
     def __init__(self, n):
         self.parent = {}
@@ -34,6 +36,7 @@ class UnionFind:
             self.parent[p2] = p1
             self.rank[p1] += 1
         return True
+
 
 class Solution:
     # Prim's algorithm

@@ -57,10 +57,43 @@ class Solution:
                 return False
         return True
 
+    # 運用 Topological sort
+    def canFinishV2(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
+        preps = {i: [] for i in range(numCourses)}
+        visited = set()   # 紀錄走過的節點
+        path = set()  # 紀錄目前某課堂的修課的順序，(c -> c 的先修 -> ...)
+        for c1, c2 in prerequisites:
+            if c1 == c2:
+                return False  # edge case
+            preps[c1].append(c2)
+
+        def dfs(c):
+            if c in path:  # 表示兩堂課互相為先修
+                return False
+            if c in visited:  # 表示此課程的先修路線已走過
+                return True
+            visited.add(c)
+            path.add(c)
+            for prep in preps[c]:
+                if not dfs(prep):
+                    return False
+            path.remove(c)
+            return True
+
+        for i in range(numCourses):
+            if not dfs(i):
+                return False
+        return True
+
 
 sol = Solution()
-print(sol.canFinish(2, [[1, 0]]))  # True
-print(sol.canFinish(2, [[1, 0], [0, 1]]))  # False
-print(sol.canFinish(2, [[1, 2], [1, 3]]))  # False
-print(sol.canFinish(3, [[1, 2], [1, 3]]))  # True
-print(sol.canFinish(3, [[1, 2], [1, 3], [3, 1]]))  # False
+# print(sol.canFinish(2, [[1, 0]]))  # True
+# print(sol.canFinish(2, [[1, 0], [0, 1]]))  # False
+# print(sol.canFinish(2, [[1, 2], [1, 3]]))  # False
+# print(sol.canFinish(3, [[1, 2], [1, 3]]))  # True
+# print(sol.canFinish(3, [[1, 2], [1, 3], [3, 1]]))  # False
+print(sol.canFinishV2(2, [[1, 0]]))  # True
+print(sol.canFinishV2(2, [[1, 0], [0, 1]]))  # False
+print(sol.canFinishV2(2, [[0, 1], [1, 0]]))  # False
+print(sol.canFinishV2(3, [[0, 1], [1, 2]]))  # True
+print(sol.canFinishV2(3, [[0, 1], [0, 2], [2, 0]]))  # False

@@ -68,7 +68,7 @@ class Solution:
         res = dfs(amount)
         return res if res != INF else -1
 
-    # DP - bottom up
+    # DP - bottom up, O(amount * len(coins)) time, O(amount) space
     def coinChangeV3(self, coins: List[int], amount: int) -> int:
         dp = [amount + 1] * (amount + 1)  # 每個剩餘的錢最小搭配的硬幣數
         dp[0] = 0

@@ -39,10 +39,10 @@ class Solution:
             if word1[i] == word2[j]:
                 return dfs(i + 1, j + 1)
             else:
-                return min(
-                    1 + dfs(i, j + 1),  # insert
-                    1 + dfs(i + 1, j + 1),  # replace
-                    1 + dfs(i + 1, j)  # delete
+                return 1 + min(
+                    dfs(i, j + 1),  # insert
+                    dfs(i + 1, j + 1),  # replace
+                    dfs(i + 1, j)  # delete
                 )
 
         return dfs(0, 0)
@@ -62,10 +62,10 @@ class Solution:
             if word1[i] == word2[j]:
                 cache[(i, j)] = dfs(i + 1, j + 1)
             else:
-                cache[(i, j)] = min(
-                    1 + dfs(i, j + 1),  # insert
-                    1 + dfs(i + 1, j + 1),  # replace
-                    1 + dfs(i + 1, j)  # delete
+                cache[(i, j)] = 1 + min(
+                    dfs(i, j + 1),  # insert
+                    dfs(i + 1, j + 1),  # replace
+                    dfs(i + 1, j)  # delete
                 )
             return cache[(i, j)]
 
@@ -112,14 +112,13 @@ print(sol.minDistanceV2("intention", "execution"))
 t2 = time.time()
 diff2 = t2 - t1
 print(diff2)
-
 print(diff1 / diff2)
 
 print("===================")
 print("DP")
 t1 = time.time()
-print(sol.minDistanceV2("horse", "ros"))
-print(sol.minDistanceV2("intention", "execution"))
+print(sol.minDistanceV3("horse", "ros"))
+print(sol.minDistanceV3("intention", "execution"))
 t2 = time.time()
 diff2 = t2 - t1
 print(diff2)

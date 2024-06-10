@@ -43,13 +43,13 @@ class Solution:
                         matrix[i][0] = 0  # mark this row
                     else:
                         firstRowIsZero = True
-
+        # 走訪第二列、第二行開始的 cell 看 該列或該行是否為 0
         for r in range(1, ROWS):
             for c in range(1, COLS):
                 if matrix[r][0] == 0 or matrix[0][c] == 0:
                     matrix[r][c] = 0
         # handle first col and row
-        if matrix[0][0] == 0:
+        if matrix[0][0] == 0:  # 判斷第一個 cell，如果是零則額外處理第一行
             for r in range(ROWS):
                 matrix[r][0] = 0
         if firstRowIsZero:
@@ -60,7 +60,9 @@ class Solution:
 sol = Solution()
 matrix1 = [[1, 1, 1], [1, 0, 1], [1, 1, 1]]
 matrix2 = [[0, 1, 2, 0], [3, 4, 5, 2], [1, 3, 1, 5]]
-sol.setZeroes(matrix1)
-sol.setZeroes(matrix2)
+# sol.setZeroes(matrix1)
+# sol.setZeroes(matrix2)
+sol.setZeroesV2(matrix1)
+sol.setZeroesV2(matrix2)
 print(matrix1)
 print(matrix2)

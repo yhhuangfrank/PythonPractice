@@ -30,12 +30,12 @@ class Solution:
         l, r = 0, len(newS) - 1
 
         while l < r:
-            lchar, rchar = newS[l].lower(), newS[r].lower()
-            if not isAlphanumeric(lchar):
+            l_char, r_char = newS[l].lower(), newS[r].lower()
+            if not isAlphanumeric(l_char):
                 l += 1
-            elif not isAlphanumeric(rchar):
+            elif not isAlphanumeric(r_char):
                 r -= 1
-            elif lchar != rchar:
+            elif l_char != r_char:
                 return False
             else:
                 l += 1

@@ -15,6 +15,7 @@ from typing import List
 
 
 class Solution:
+    # O(n) time, O(n) space
     def longestConsecutive(self, nums: List[int]) -> int:
         numSet = set(nums)
         maxLen = 0

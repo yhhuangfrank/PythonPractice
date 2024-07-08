@@ -19,21 +19,19 @@
 # Explanation:
 # The cars starting at 10 (speed 2) and 8 (speed 4) become a fleet, meeting each other at 12. The fleet forms at target.
 # The car starting at 0 (speed 1) does not catch up to any other car, so it is a fleet by itself.
-# The cars starting at 5 (speed 1) and 3 (speed 3) become a fleet, meeting each other at 6. The fleet moves at speed 1 until it reaches target.
+# The cars starting at 5 (speed 1) and 3 (speed 3) become a fleet, meeting each other at 6.
+# The fleet moves at speed 1 until it reaches target.
 from typing import List
 
 
 class Solution:
+    # O(NlogN) time, O(n) space
     def carFleet(self, target: int, position: List[int], speed: List[int]) -> int:
-        arr = []
-        for i, pos in enumerate(position):
-            time = (target - pos) / speed[i]
-            arr.append((pos, time))
-
+        arr = [(p, s) for p, s in zip(position, speed)]
         arr.sort(key=lambda x: x[0])  # 依照離 target 遠近排列(pos 由小到大)
         stack = []  # 依照時間單調遞增
-        for i in range(len(arr) - 1, -1, -1):
-            time = arr[i][1]
+        for p, s in arr[::-1]:  # 從距離終點近的開始遍歷
+            time = (target - p) / s
             if stack and time <= stack[-1]:
                 continue
             stack.append(time)

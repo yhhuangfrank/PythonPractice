@@ -32,9 +32,8 @@ class Solution:
         stack = []  # 依照時間單調遞增
         for p, s in arr[::-1]:  # 從距離終點近的開始遍歷
             time = (target - p) / s
-            if stack and time <= stack[-1]:
-                continue
-            stack.append(time)
+            if not stack or time > stack[-1]:
+                stack.append(time)
         return len(stack)
 
 

@@ -38,14 +38,14 @@ class Solution:
                 cur.next = r
             return dummy.next
 
-        def split(s, e):
+        def helper(s, e):
             if e - s + 1 == 1:
                 return lists[s]
             # divide into half until one linkedList
             m = s + (e - s) // 2
-            return merge(split(s, m), split(m + 1, e))  # merge two linkedList
+            return merge(helper(s, m), helper(m + 1, e))  # merge two linkedList
 
-        return split(0, len(lists) - 1) if lists else None
+        return helper(0, len(lists) - 1) if lists else None
 
 
 sol = Solution()
@@ -59,11 +59,11 @@ l2.next = ListNode(3, ListNode(4))
 l3 = ListNode(2, ListNode(6))
 l4 = sol.mergeKLists([l1, l2, l3])
 
-s = ""
+string = ""
 node = l4
 while node:
-    s += str(node.val)
+    string += str(node.val)
     if node.next:
-        s += "->"
+        string += "->"
     node = node.next
-print(s)
+print(string)

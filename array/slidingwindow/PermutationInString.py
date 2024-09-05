@@ -56,15 +56,16 @@ class Solution:
         if matches == 26:
             return True
 
+        # sliding window
         while r < len(s2):
-            # left char
+            # left char (remove from the window)
             lIndex = ord(s2[l]) - ord("a")
             s2Count[lIndex] -= 1
             if s2Count[lIndex] == s1Count[lIndex]:
                 matches += 1
             elif s2Count[lIndex] + 1 == s1Count[lIndex]:  # 去掉之前是相同個數的
                 matches -= 1
-            # right char
+            # right char (add into the window)
             rIndex = ord(s2[r]) - ord("a")
             s2Count[rIndex] += 1
             if s2Count[rIndex] == s1Count[rIndex]:

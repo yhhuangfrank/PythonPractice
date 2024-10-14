@@ -77,7 +77,7 @@ class Codec:
             j += 1
         return root
 
-    # 法一, DFS
+    # 法二, DFS
     def serializeByDFS(self, root: TreeNode) -> str:
         res = []
 

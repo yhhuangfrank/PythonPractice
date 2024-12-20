@@ -19,6 +19,7 @@
 # void unfollow(int followerId, int followeeId)
 # The user with ID followerId started unfollowing the user with ID followeeId.
 import heapq
+from collections import defaultdict
 from typing import List
 
 
@@ -57,9 +58,58 @@ class Twitter:
             if followeeId in self.followings[followerId]:
                 self.followings[followerId].remove(followeeId)
 
+
+class Twitter2:
+    def __init__(self):
+        self.tweets = defaultdict(list)  # list of [time, tweetId]
+        self.follows = defaultdict(set)  # set of followee
+        self.time = 0
+
+    def post_tweet(self, userId: int, tweetId: int) -> None:
+        self.tweets[userId].append([-self.time, tweetId])
+        self.time += 1
+
+    def get_news_feed(self, userId: int) -> List[int]:
+        res = []
+        maxHeap = []
+
+        self.follows[userId].add(userId)  # 加入自己，因為自己的貼文也看得到
+        # 加入每個 followee 的貼文最後一個(最新)
+        for followee in self.follows[userId]:
+            if followee in self.tweets:  # 如果 followee 有貼文
+                index = len(self.tweets[followee]) - 1  # 取得末尾的 index
+                time, tweetId = self.tweets[followee][index]
+                heapq.heappush(maxHeap, [time, followee, tweetId, index - 1])  # 放入下一個 index
+
+        while maxHeap and len(res) < 10:
+            time, followee, tweetId, index = heapq.heappop(maxHeap)
+            res.append(tweetId)
+            # 若貼文列表還有貼文
+            if index >= 0:
+                time, tweetId = self.tweets[followee][index]
+                heapq.heappush(maxHeap, [time, followee, tweetId, index - 1])
+        return res
+
+    def follow(self, followerId: int, followeeId: int) -> None:
+        self.follows[followerId].add(followeeId)
+
+    def unfollow(self, followerId: int, followeeId: int) -> None:
+        if followeeId in self.follows[followerId]:
+            self.follows[followerId].remove(followeeId)
+
+
 # Your Twitter object will be instantiated and called as such:
 # obj = Twitter()
 # obj.postTweet(userId,tweetId)
 # param_2 = obj.getNewsFeed(userId)
 # obj.follow(followerId,followeeId)
 # obj.unfollow(followerId,followeeId)
+
+obj = Twitter2()
+obj.post_tweet(1, 5)
+print(obj.get_news_feed(1))  # 5
+obj.follow(1, 2)
+obj.post_tweet(2, 6)
+print(obj.get_news_feed(1))  # 6
+obj.unfollow(1, 2)
+print(obj.get_news_feed(1))  # 5

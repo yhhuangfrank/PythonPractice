@@ -55,14 +55,32 @@ class Solution:
             return cache[(i, isSold)]
 
         return dfs(0, True)
+    
+    # DP - bottom up
+    def maxProfitV3(self, prices: List[int]) -> int:
+        dp = [[0] * 2 for _ in range(len(prices))]
+        ROWS, COLS = len(dp), len(dp[0])
 
+        for r in range(ROWS - 1, -1, -1):
+            for c in range(COLS - 1, -1, -1):
+                cooldown = dp[r + 1][c] if r + 1 < ROWS else 0
+                if c == 0: # previous one is buying
+                    sell = prices[r] + dp[r + 2][1] if r + 2 < ROWS else prices[r]
+                    dp[r][c] = max(sell, cooldown)
+                else: # previous one is selling
+                    buy = -prices[r] + dp[r + 1][0] if r + 1 < ROWS else -prices[r]
+                    dp[r][c] = max(buy, cooldown)
+        return dp[0][1]
 
 sol = Solution()
 arr1 = [1, 2, 3, 0, 2]
 arr2 = [1]
 
-print(sol.maxProfit(arr1))
-print(sol.maxProfit(arr2))
+# print(sol.maxProfit(arr1))
+# print(sol.maxProfit(arr2))
 
 print(sol.maxProfitV2(arr1))
 print(sol.maxProfitV2(arr2))
+
+print(sol.maxProfitV3(arr1))
+print(sol.maxProfitV3(arr2))

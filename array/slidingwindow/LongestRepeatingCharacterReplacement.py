@@ -19,6 +19,7 @@ class Solution:
         while r < len(s):
             count[s[r]] = count.get(s[r], 0) + 1
             curLen = r - l + 1
+            # 扣除出現最多的字母後，判斷是否超過限制(k)
             if curLen - max(count.values()) > k:
                 count[s[l]] = count.get(s[l], 0) - 1
                 l += 1

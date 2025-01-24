@@ -63,6 +63,54 @@ class Solution:
     
     # UnionFind
     def accountsMerge2(self, accounts: List[List[str]]) -> List[List[str]]:
+        uf = UnionFind(len(accounts))
+        accToEmails = defaultdict(list)
+        emailToAcc = {} # email -> account_id
+
+        for accId, a in enumerate(accounts):
+            for i in range(1, len(a)):
+                email = a[i]
+                if email in emailToAcc:
+                    uf.union(emailToAcc[email], accId)
+                else:
+                    emailToAcc[email] = accId
+        for email, accId in emailToAcc.items():
+            parentId = uf.find(accId)
+            accToEmails[parentId].append(email)
+        
+        res = []
+        for accId, emailList in accToEmails.items():
+            name = accounts[accId][0]
+            lst = []
+            lst.append(name)
+            for email in sorted(emailList):
+                lst.append(email)
+            res.append(lst)
+        return res
+
+class UnionFind:
+    def __init__(self, n):
+        self.parent = [i for i in range(n)]
+        self.rank = [1] * n
+    def find(self, n):
+        p = self.parent[n]
+        while p != self.parent[n]:
+            self.parent[p] = self.parent[self.parent[p]]
+            p = self.parent[n]
+        return p
+    def union(self, n1, n2):
+        p1, p2 = self.find(n1), self.find(n2)
+        if p1 == p2:
+            return False
+        r1, r2 = self.rank[p1], self.rank[p2]
+        if r1 >= r2:
+            self.parent[p2] = p1
+            self.rank[p1] += r2
+        elif r2 > r1:
+            self.parent[p1] = p2
+            self.rank[p2] += r1
+        return True
+
 # Input: accounts = 
 # [
 #     ["John","johnsmith@mail.com","john_newyork@mail.com"],
@@ -84,4 +132,3 @@ accounts = [
 ]
 sol = Solution()
 print(sol.accountsMerge(accounts))
-

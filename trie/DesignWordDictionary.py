@@ -13,20 +13,20 @@ class WordDictionary:
         
     def search(self, word: str) -> bool:
         
-        def dfs(i, cur):
+        def dfs(i, curNode):
             if i == len(word):
-                return cur.word
+                return curNode.word
             # wildcard
             if word[i] == ".":
                 # 每個 child 的 TrieNode 都嘗試
-                for node in cur.children.values():
+                for node in curNode.children.values():
                     if dfs(i + 1, node):
                         return True
                 return False
             # normal Trie search
-            if word[i] not in cur.children:
+            if word[i] not in curNode.children:
                 return False
-            return dfs(i + 1, cur.children[word[i]])
+            return dfs(i + 1, curNode.children[word[i]])
 
         return dfs(0, self.root)
                 

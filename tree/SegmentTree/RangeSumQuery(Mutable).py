@@ -12,17 +12,21 @@ class Node:
 class NumArray:
 
     def __init__(self, nums: List[int]):
-        self.root = self.build(nums, 0, len(nums) - 1)
+        self.root = self.build(nums)
     
-    def build(self, nums, l, r):
-        if l == r:
-            return Node(nums[l], l, r)
-        root = Node(0, l, r)
-        m = l + (r - l) // 2
-        root.left = self.build(nums, l, m)
-        root.right = self.build(nums, m + 1, r)
-        root.total = root.left.total + root.right.total
-        return root
+    def build(self, nums):
+
+        def buildHelper(l, r):
+            if l == r:
+                return Node(nums[l], l, r)
+            root = Node(0, l, r)
+            m = l + (r - l) // 2
+            root.left = buildHelper(l, m)
+            root.right = buildHelper(m + 1, r)
+            root.total = root.left.total + root.right.total
+            return root
+        
+        return buildHelper(0, len(nums) - 1)
 
     def update(self, index: int, val: int) -> None:
 

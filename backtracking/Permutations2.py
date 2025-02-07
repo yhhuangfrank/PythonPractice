@@ -18,7 +18,6 @@ from typing import List
 class Solution:
     # O(n * n!) time
     def permuteUnique(self, nums: List[int]) -> List[List[int]]:
-        {1: 2, 2: 1}
         res = []
         perm = []
         counts = {n: 0 for n in nums}

@@ -39,7 +39,7 @@ class UnionFind:
 
 
 class Solution:
-    # Prim's algorithm
+    # Prim's algorithm, O(N^2logN) time
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
         adj = {i: [] for i in range(len(points))}
         for i in range(len(points)):
@@ -64,16 +64,16 @@ class Solution:
                     heapq.heappush(minHeap, (dist2, node2))
         return mstCost
 
-    # Kruskal's algorithm
+    # Kruskal's algorithm, O(N^2logN) time
     def minCostConnectPointsV2(self, points: List[List[int]]) -> int:
+        n = len(points)
         minHeap = []
-        for i in range(len(points)):
-            for j in range(i + 1, len(points)):
+        for i in range(n):
+            for j in range(i + 1, n):
                 p1, p2 = points[i], points[j]
                 dist = abs(p1[0] - p2[0]) + abs(p1[1] - p2[1])
                 heapq.heappush(minHeap, (dist, i, j))
 
-        n = len(points)
         components = n
         uf = UnionFind(n)
         mstCount = 0

@@ -30,6 +30,7 @@ class Solution:
         ROWS, COLS = len(grid), len(grid[0])
         visit = set()
         minHeap = [(grid[0][0],0,0)]
+        visit.add((0,0))
 
         while minHeap:
             h, x, y = heapq.heappop(minHeap)

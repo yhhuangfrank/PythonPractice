@@ -1,5 +1,10 @@
 class Solution:
     def addMinimum(self, word: str) -> int:
+        # return self.solution1(word)
+        return self.solution2(word)
+
+    # O(N) time
+    def solution1(self, word: str) -> int:
         valid = 'abc'
         l = 0 # pointer for word
         r = 0 # pointer for 'abc'
@@ -18,6 +23,26 @@ class Solution:
         if r != 0:
             count += len(valid) - r
         return count
+
+    # O(N) time, 從數學上角度，先計算需要幾組 abc，再計算出需要補的數量
+    def solution2(self, word: str) -> int:
+
+        def mapToInt(char):
+            if char == 'a':
+                return 0
+            elif char == 'b':
+                return 1
+            else:
+                return 2
+
+        pairs = 1
+        for i in range(1, len(word)):
+            cur = mapToInt(word[i])
+            prev = mapToInt(word[i - 1])
+            if cur <= prev:
+                pairs += 1
+
+        return 3 * pairs - len(word)
 
 # Example 1:
 # Input: word = "b"
